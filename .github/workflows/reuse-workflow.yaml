@@ -2,22 +2,28 @@ name: "Sample reuse workflow"
 
 on:
   workflow_call:
+    inputs:
+      TIMEOUT_MINUTES:
+        description: "Github job timeout in minutes"
+        type: number
+        required: true
+        default: 10
   workflow_dispatch:
     inputs:
       GIT_SHA:
-        required: true
+        required: false
         type: string
         description: The git SHA1 to build. If not specified, the latest commit on the triggering branch will be built
 
-
 jobs:
   rust-all:
+    timeout-minutes: ${{ inputs.TIMEOUT_MINUTES || 10 }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # pin@v3
         with:
-          ref: ${{ input.GIT_SHA }}
+          ref: ${{ inputs.GIT_SHA }}
 
       - run: |
           echo "Hello, world!"
-          echo "The current SHA is ${{ input.GIT_SHA }}"
+          echo "The current SHA is ${{ inputs.GIT_SHA }}"
