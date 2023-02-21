@@ -8,12 +8,37 @@ on:
         type: number
         required: true
         default: 10
+      BOOLEAN_FOR_SOMETHING:
+        description: "Boolean for something"
+        type: boolean
+        required: true
+        default: false
+      BOOLEAN_FOR_SOMETHING_2:
+        description: "Boolean for something"
+        type: boolean
+        required: true
+        default: false
+      DETERMINED_BRANCH:
+        description: "Determined branch"
+        type: string
+        required: true
+        default: "main"
+      BRANCH:
+        description: "Branch"
+        type: string
+        required: true
+        default: "main"
   workflow_dispatch:
     inputs:
       GIT_SHA:
         required: false
         type: string
         description: The git SHA1 to build. If not specified, the latest commit on the triggering branch will be built
+      BOOLEAN_FOR_SOMETHING:
+        description: "Boolean for something"
+        type: boolean
+        required: true
+        default: false
 
 jobs:
   rust-all:
@@ -26,4 +51,7 @@ jobs:
 
       - run: |
           echo "Hello, world!"
-          echo "The current SHA is ${{ inputs.GIT_SHA }}"
+          echo "The current bool is ${{ inputs.BOOLEAN_FOR_SOMETHING }}"
+          echo "The current bool 2 is ${{ inputs.BOOLEAN_FOR_SOMETHING_2 }}"
+          echo "The current branch is ${{ inputs.BRANCH }}"
+          echo "The current determined branch is ${{ inputs.DETERMINED_BRANCH }}"
